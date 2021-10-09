@@ -1,0 +1,14 @@
+[package]
+name = "tex-slasher"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+image = { version = "0.23.14", default-features = false, features = ["png"] }
+toml = "0.5.8"
+serde = { version = "1.0.130", features = ["derive"] }
+structopt = "0.3.23"
+anyhow = "1.0.44"
+zip = "0.5.13"
