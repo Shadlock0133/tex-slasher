@@ -149,6 +149,7 @@ fn process_atlas_map(
 struct Zips<'a>(Vec<(ZipArchive<File>, &'a [String])>);
 
 // Yes, this is dumb, I don't care
+// This works around bug in current (NLL, pre-polonius) borrowck
 unsafe fn cheat_lifetime<'a, 'b>(t: ZipFile<'a>) -> ZipFile<'b> {
     std::mem::transmute(t)
 }
@@ -197,6 +198,11 @@ fn main() -> anyhow::Result<()> {
     let guis_dir = textures.join("gui");
     let blocks_dir = textures.join("block");
     let items_dir = textures.join("item");
+
+    std::fs::create_dir_all(&models_dir).unwrap();
+    std::fs::create_dir_all(&guis_dir).unwrap();
+    std::fs::create_dir_all(&blocks_dir).unwrap();
+    std::fs::create_dir_all(&items_dir).unwrap();
 
     let mut banner = zips.find(&toml.banner).unwrap();
     let mut banner_file = File::create(res.join(toml.banner))?;
